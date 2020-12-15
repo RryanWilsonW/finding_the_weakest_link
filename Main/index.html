@@ -10,9 +10,9 @@
   </head>
 
   <body>
-    <div class="scores"><a href="highscores.html">View Highscores</a></div>
+    <div class="scores" id="scores"><a href="highscores.html">View Highscores</a></div>
 
-    <div class="timer">Time: <span id="time">0</span></div>
+    <div class="timer hide" id='timer'>Time: <span id="time"></span></div>
 
     <div class="wrapper">
       <div id="start-screen" class="start">
@@ -31,7 +31,7 @@
         <button class="choices">var</button>
         <button class= choices>const</button>
         <button class="choices">let</button>
-        <button class="choices">All of the above.</button>
+        <button id="lastCorrectAnswer" class="choices">All of the above.</button>
       </div>
 
       <div id="end-screen" class="hide">
