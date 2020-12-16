@@ -1,14 +1,22 @@
-//Define the variables to connect to HTML.
+// get question function.
+// question is made up of the text, multiple answers, and someway to know which answer is correct.
+function question(text, answers, correctAnswer){
+    this.text = text;
+    this.answers = answers;
+    this.correctAnswer = correctAnswer;
+}
+let questions = [
+    new question("Q1", ["A1","A2","A3","A4"], 3),
+    new question("Q2", ["A1","A2","A3","A4"], 1),
+    new question("Q3", ["A1","A2","A3","A4"], 1),
+    new question("Q4", ["A1","A2","A3","A4"], 1),
 
-/// What variables do I need?
+]
 
-//Make the button work
-///  On click -->
-//// Timer Should start.
-//// A Multiple Choice Question Should appear.
-//// The Starting Page Should Hide From the Browser.
-
-
-//Make the pages change when an answer is submitted.
-
-//Put a Done button that takes you to the highscore page.
+function getQuestion(questionIndex) {
+    if(questions.length - 1 >= questionIndex){
+        return questions[questionIndex];
+    } else {
+        return null;
+    }
+}
