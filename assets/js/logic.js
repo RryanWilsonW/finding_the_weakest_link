@@ -52,6 +52,8 @@ function renderTime(){
     totalSeconds--
    if(totalSeconds < 0){
        clearInterval(interval);
+       totalSeconds = 0;
+       finalScore.textContent = 0;
        gameOver();
    } else {
     timer.textContent = getFormattedSeconds();
@@ -153,16 +155,6 @@ function saveScore() {
     console.log(scores);
     localStorage.setItem('score', JSON.stringify(scores)); 
 }
-
-
-//creates an unordered list to store the input data.
-function createUl() {
-    console.log('createUl');
-    let ul = document.createElement('ul');
-    ul.setAttribute("id", "infoList");
-    document.body.appendChild(ul);
-}
-createUl();
 
 function createLi(){
     let li = document.createElement('li')
