@@ -8,13 +8,11 @@ function clearHighScore() {
 }
 
     let scores = localStorage.getItem('score');
-    console.log('hello')
     scores = JSON.parse(scores);
-    console.log(scores);
     scores.sort(compare);
     for(i=0; i < scores.length; i++) {
         let newLi = document.createElement('li');
-        newLi.textContent = scores[i].initials + " " + scores[i].finalScore;
+        newLi.textContent = scores[i].initials + " - " + scores[i].finalScore;
         highScoreContainer.appendChild(newLi);
     } 
 

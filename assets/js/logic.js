@@ -32,10 +32,6 @@ function show(target) {
 function hide(target) {
     target.classList.add('hide');
 }
-function blink(target) {
-    target.classList.remove('hide');
-    delay(100).target.classList.add('hide')
-}
 
 //TIMER!!!
 function getFormattedSeconds() {
@@ -60,7 +56,6 @@ function renderTime(){
    }
 }
 function startTimer() {
-    console.log('start timer');
     timer.textContent = '90';
     totalSeconds = 90; 
     hide(highScoreDiv);
@@ -70,8 +65,6 @@ function startTimer() {
     show(timerContainer);
     hide(startScreen);
     renderQuestion();
-    console.log(currentQuestion.text);
-    console.log(currentQuestion);
     show(questionContainer);
 }
 
@@ -84,14 +77,12 @@ function renderQuestion(){
     choice4.textContent = currentQuestion.answers[3];
 }
 function checkAnswer(buttonIndex){
-    console.log(currentQuestion);
     if(currentQuestion.correctAnswer === buttonIndex){
-        console.log('right')
         currentQuestionIndex++
         currentQuestion = getQuestion(currentQuestionIndex);
-        console.log(currentQuestion)
+        show(correct);
+        hide(incorrect);
         if(currentQuestion === null){
-            console.log('We Won!')
             hide(questionContainer);
             hide(timerContainer);
             show(endScreen);
@@ -100,10 +91,10 @@ function checkAnswer(buttonIndex){
             renderQuestion();
         }
     } else {
-        console.log('not true')
         totalSeconds = totalSeconds - 10;
         renderTime();
-        blink(incorrect);
+        show(incorrect);
+        hide(correct)
     }
 }
 
@@ -126,7 +117,6 @@ function onChoice4(){
 
 //This will end the game when the timer runs out.
 function gameOver(){
-    console.log('gameOver');
     hide(questionContainer);
     hide(timerContainer);
     show(endScreen);
@@ -135,14 +125,12 @@ function gameOver(){
 
 //When user hits submit the program will...
 function onSubmit() {
-    console.log('onSubmit');
     saveScore();
     goToHighScore();
     createLi();
 }
 // 1.)Save the score to the browsers local storage.  
 function saveScore() {
-    console.log('saveScore');
     let scores = JSON.parse((localStorage.getItem('score')));
 
     if(scores === null) {
@@ -152,7 +140,6 @@ function saveScore() {
     clearInterval(interval);
     hide(timerContainer);  
     scores.push({initials: initials.value, finalScore: finalScore.textContent})
-    console.log(scores);
     localStorage.setItem('score', JSON.stringify(scores)); 
 }
 
