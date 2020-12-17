@@ -13,7 +13,7 @@ let choice1 = document.querySelector('#choice1');
 let choice2 = document.querySelector('#choice2');
 let choice3 = document.querySelector('#choice3');
 let choice4 = document.querySelector('#choice4');
-let finaleScore = document.querySelector('#final-score')
+let finalScore = document.querySelector('#final-score')
 let incorrect = document.querySelector('#incorrect');
 let correct = document.querySelector('#correct')
 let initials = document.querySelector('#initials');
@@ -31,6 +31,10 @@ function show(target) {
 }
 function hide(target) {
     target.classList.add('hide');
+}
+function blink(target) {
+    target.classList.remove('hide');
+    delay(100).target.classList.add('hide')
 }
 
 //TIMER!!!
@@ -87,8 +91,9 @@ function checkAnswer(buttonIndex){
         if(currentQuestion === null){
             console.log('We Won!')
             hide(questionContainer);
+            hide(timerContainer);
             show(endScreen);
-            show(correct);
+            finalScore.textContent = totalSeconds;
         } else {
             renderQuestion();
         }
@@ -96,9 +101,11 @@ function checkAnswer(buttonIndex){
         console.log('not true')
         totalSeconds = totalSeconds - 10;
         renderTime();
-        show(incorrect);
+        blink(incorrect);
     }
 }
+
+
 function onChoice1(){
     checkAnswer(0);
 }
@@ -129,15 +136,38 @@ function onSubmit() {
     console.log('onSubmit');
     saveScore();
     goToHighScore();
+    createLi();
 }
-// 1.)Save the score to the browsers local storage. 
+// 1.)Save the score to the browsers local storage.  
 function saveScore() {
     console.log('saveScore');
-    finaleScore.textContent = totalSeconds;
+    let scores = JSON.parse((localStorage.getItem('score')));
+
+    if(scores === null) {
+        scores = [];
+    }
+    finalScore.textContent = totalSeconds;
     clearInterval(interval);
     hide(timerContainer);  
-    localStorage.setItem('score', string(finaleScore));
-    localStorage.setItem('initals', string(initials));    
+    scores.push({initials: initials.value, finalScore: finalScore.textContent})
+    console.log(scores);
+    localStorage.setItem('score', JSON.stringify(scores)); 
+}
+
+
+//creates an unordered list to store the input data.
+function createUl() {
+    console.log('createUl');
+    let ul = document.createElement('ul');
+    ul.setAttribute("id", "infoList");
+    document.body.appendChild(ul);
+}
+createUl();
+
+function createLi(){
+    let li = document.createElement('li')
+    li.textContent = finalScore.textContent;
+    document.body.appendChild(li);
 }
 
 // 2.) Direct the user to the highscore page.
